@@ -1,25 +1,8 @@
 import { RADIUS } from "./conf.js";
 
-export function symbol(symbol, style) {
-	let node;
-	let hex = symbol.codePointAt(0).toString(16);
-
-	switch (style) {
-		case "twitter":
-			node = new Image();
-			node.src = `https://twemoji.maxcdn.com/v/latest/svg/${hex.toLowerCase()}.svg`;
-		break;
-
-		case "openmoji":
-			node = new Image();
-			node.src = `https://cdn.jsdelivr.net/npm/openmoji@latest/color/svg/${hex.toUpperCase()}.svg`;
-		break;
-
-		default:
-			node = document.createElement("span");
-			node.textContent = symbol;
-		break;
-	}
+export function symbol(symbol) {
+	let node = new Image();
+  node.src = `./images/${symbol}`;
 	node.classList.add("symbol");
 	return node;
 }
@@ -50,7 +33,7 @@ function getScaleRange(count) {
 	if (count < 4) {
 		return [1, 2];
 	} else if (count < 9) {
-		return [0.6, 1.4];
+		return [0.8, 1.4];
 	} else {
 		return [0.5, 1];
 	}
@@ -71,12 +54,12 @@ function positionAndStyle(symbol, index, count) {
 	symbol.style.transform = transforms.join(" ");
 }
 
-function card(card, symbols, style) {
+function card(card, symbols) {
 	let node = document.createElement("div");
 	node.classList.add("card");
 
 	card.forEach((sindex, i) => {
-		let s = symbol(symbols[sindex], style);
+		let s = symbol(symbols[sindex]);
 		positionAndStyle(s, i, card.length);
 		node.appendChild(s);
 	});
@@ -84,8 +67,8 @@ function card(card, symbols, style) {
 	return node;
 }
 
-export function cards(cards, symbols, style) {
+export function cards(cards, symbols) {
 	let node = document.createDocumentFragment();
-	cards.map(c => card(c, symbols, style)).forEach(c => node.appendChild(c));
+	cards.map(c => card(c, symbols)).forEach(c => node.appendChild(c));
 	return node;
 }

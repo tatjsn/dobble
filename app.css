@@ -41,7 +41,11 @@ aside .symbol {
 	margin: 0 0.2em;
 }
 
-img.symbol { height: 1em; }
+img.symbol {
+  width: 1em;
+  height: 1em;
+  object-fit: contain;
+}
 
 .card {
 	width: calc(var(--radius) * 2px);
